@@ -1,0 +1,1 @@
+i am dynamic contene created by nodejs
