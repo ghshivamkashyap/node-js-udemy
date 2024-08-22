@@ -18,7 +18,7 @@ const AddBookForm = (props) => {
       },
       {
         headers: {
-          Authorization: `Bearer YOUR_TOKEN_HERE`,
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyIkX18iOnsiYWN0aXZlUGF0aHMiOnsicGF0aHMiOnsiX2lkIjoiaW5pdCIsInVzZXJuYW1lIjoiaW5pdCIsInBhc3N3b3JkIjoiaW5pdCIsIl9fdiI6ImluaXQifSwic3RhdGVzIjp7ImluaXQiOnsiX2lkIjp0cnVlLCJ1c2VybmFtZSI6dHJ1ZSwicGFzc3dvcmQiOnRydWUsIl9fdiI6dHJ1ZX19fSwic2tpcElkIjp0cnVlfSwiJGlzTmV3IjpmYWxzZSwiX2RvYyI6eyJfaWQiOiI2NmM2ZjI3MDcwNzU1NDQxMmNiNmFmMDIiLCJ1c2VybmFtZSI6IlN1aGFuaSBrYXBhc2l5YSIsInBhc3N3b3JkIjoiJDJhJDEwJG93MWlJLmlWSnBuLk9wMVNIMXF5N3VBOTBlS3BFdFhzOG5GV25pUk9GM3FYd25GbVZmZjZTIiwiX192IjowfSwiaWF0IjoxNzI0MzQ1NjAwfQ.BayFRBhSK7AivLR2eKoJ8nAb0iRhunaizHSsaTeADWA`,
         },
       }
     );
