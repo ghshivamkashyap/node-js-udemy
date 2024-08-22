@@ -1,8 +1,23 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 const app = express();
 app.use(express.json());
+
+
+
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
+    credentials: true,
+  })
+);
+
+mongoose
+  .connect("mongodb://localhost:27017")
+  .then(() => console.log("Connected to db successfully"))
+  .catch((err) => console.log("Error connecting to db: ", err));
 
 // connect db
 // mongoose
@@ -17,22 +32,18 @@ const schema = new mongoose.Schema({
   pricee: Number,
   author: String,
 });
-const db = mongoose.connection;
-db.on("connected", async () => {
-  await db.dropDatabase();
-  console.log("Old database dropped, now using the new one");
-});
+// const db = mongoose.connection;
+// db.on("connected", async () => {
+//   await db.dropDatabase();
+//   console.log("Old database dropped, now using the new one");
+// });
 
-mongoose
-  .connect("mongodb://localhost:27017", {
-    dbName: "bookShop",
-  })
-  .then(() => console.log("Connected to db successfully"))
-  .catch((err) => console.log("Error connecting to db: ", err));
+
 
 const Books = mongoose.model("books", schema);
 
 app.get("/getallbooks", async (req, res, next) => {
+  console.log("get all books called");
   try {
     let books = await Books.find();
     return res.status(200).json({
@@ -70,9 +81,9 @@ app.post("/addbook", async (req, res, next) => {
   }
 });
 
-app.listen(3000, (err) => {
+app.listen(4000, (err) => {
   if (!err) {
-    console.log("Server is running on port 3000");
+    console.log("Server is running on port 4000");
   } else {
     console.log("Error: ", err);
   }
