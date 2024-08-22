@@ -7,7 +7,7 @@ const Books = () => {
 
   const getaAllBooks = async () => {
     console.log("get all books called");
-    let res = await axios.get("http://localhost:4000/getallbooks");
+    let res = await axios.get("http://localhost:4000/books/getallbooks/param420/?name=shivam&surname=kashyap");
 
     steBooks(res.data.data);
     // console.log("Books: ", books);

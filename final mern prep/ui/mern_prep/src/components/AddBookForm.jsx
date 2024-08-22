@@ -11,7 +11,7 @@ const AddBookForm = (props) => {
       return;
     }
 
-    let res = await axios.post("http://localhost:4000/addbook", {
+    let res = await axios.post("http://localhost:4000/books/addbook", {
       ...formData,
     });
 
