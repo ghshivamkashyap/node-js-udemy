@@ -5,8 +5,6 @@ const cors = require("cors");
 const app = express();
 app.use(express.json());
 
-
-
 app.use(
   cors({
     origin: ["http://localhost:3000"],
@@ -38,17 +36,17 @@ const schema = new mongoose.Schema({
 //   console.log("Old database dropped, now using the new one");
 // });
 
-
-
 const Books = mongoose.model("books", schema);
 
-app.get("/getallbooks", async (req, res, next) => {
-  console.log("get all books called");
+app.get("/getallbooks/:param", async (req, res, next) => {
+  console.log("get all books called: ", req.params.name);
   try {
     let books = await Books.find();
     return res.status(200).json({
       success: true,
       message: "All books fetched success",
+      query: req.query,
+      params: req.params,
       data: books,
     });
   } catch (err) {
