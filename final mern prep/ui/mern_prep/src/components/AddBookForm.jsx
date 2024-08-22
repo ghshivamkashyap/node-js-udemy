@@ -11,9 +11,17 @@ const AddBookForm = (props) => {
       return;
     }
 
-    let res = await axios.post("http://localhost:4000/books/addbook", {
-      ...formData,
-    });
+    let res = await axios.post(
+      "http://localhost:4000/books/addbook",
+      {
+        ...formData,
+      },
+      {
+        headers: {
+          Authorization: `Bearer YOUR_TOKEN_HERE`,
+        },
+      }
+    );
 
     if (res.status == 200) {
       console.log(props);
