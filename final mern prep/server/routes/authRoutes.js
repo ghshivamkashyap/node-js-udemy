@@ -33,8 +33,8 @@ authRoutes.post("/login", async (req, res, next) => {
     username: req.body.username,
   });
 
-  if (user && (await bcrypt.compare(req.body.password, user.password))) {
-    const token = await jwt.sign({ ...user }, "kashyapshivam");
+  if (user && bcrypt.compare(req.body.password, user.password)) {
+    const token = jwt.sign({ ...user }, "kashyapshivam");
     res.status(201).json({
       success: true,
       message: "login success",
@@ -42,11 +42,11 @@ authRoutes.post("/login", async (req, res, next) => {
     });
   }
 
-  res.status(201).json({
-    success: true,
-    message: "login success",
-    data: user,
-  });
+  // return res.status(201).json({
+  //   success: true,
+  //   message: "login success",
+  //   data: user,
+  // });
 });
 
 module.exports = authRoutes;
