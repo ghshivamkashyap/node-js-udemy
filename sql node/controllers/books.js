@@ -45,3 +45,27 @@ exports.addBook = async (req, res, next) => {
       });
     });
 };
+
+exports.getBookById = async (req, res, next) => {
+  console.log("Req query: ", req.params.id);
+  let ans = null;
+  await db
+    .execute("SELECT * FROM books where id=?", [req.params.id])
+    .then((result) => {
+      ans = result[0];
+      return res.status(200).json({
+        success: true,
+        message: "Data fetched",
+        data: result[0],
+      });
+    })
+    .catch((err) => {
+      return res.status(500).json({
+        success: false,
+        message: "Error getting all books",
+        error: err,
+      });
+    });
+
+  console.log("Ans: ", ans);
+};
