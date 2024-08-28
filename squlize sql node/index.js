@@ -3,6 +3,7 @@ const cors = require("cors");
 const db = require("./utils/database");
 const booksRoutes = require("./routes/books");
 const sequelize = require("./utils/database");
+const userRoutes = require("./routes/user");
 
 const app = express();
 app.use(express.json());
@@ -21,6 +22,7 @@ app.use(
 
 // routes
 app.use("/books", booksRoutes);
+app.use("/user", userRoutes);
 
 // instanciating the tables in db
 sequelize
