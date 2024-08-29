@@ -27,6 +27,7 @@ exports.addBook = async (req, res, next) => {
     name: req.body.name,
     author: req.body.author,
     price: req.body.price,
+    userId: req.user.id || 10,
   })
     .then((result) => {
       return res.status(200).json({
