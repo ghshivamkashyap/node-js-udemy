@@ -1,5 +1,5 @@
 
-# NodeJS - The Complete Guide (Udemy)
+# NodeJS - The Complete Guide
 
 Welcome to my repository for the [NodeJS - The Complete Guide](https://www.udemy.com/course/nodejs-the-complete-guide/?couponCode=OF83024F) course on Udemy. This repository contains all the code examples, exercises, and project implementations as I progress through the course.
 
