@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 const mongoose = require("mongoose");
+const booksRoutes = require("./routes/books");
+const userRoutes = require("./routes/user");
 
 const app = express();
 app.use(express.json());
@@ -12,6 +14,10 @@ app.use(
     credentials: true,
   })
 );
+
+// routes
+app.use("/books", booksRoutes);
+app.use("/user", userRoutes);
 
 // db connect and start lstening to port
 mongoose
