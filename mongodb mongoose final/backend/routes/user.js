@@ -1,9 +1,9 @@
 const express = require("express");
+const { createUser, addToCart, getUserById } = require("../controllers/user");
 const userRoutes = express.Router();
 
-// userRoutes.get("/getallbooks", getAllBooks);
-// userRoutes.get("/getbookbyid/:id", getBookById);
-// userRoutes.patch("/editbook/:id", editBook);
-// userRoutes.post("/addbook", addBook);
+userRoutes.post("/createuser", createUser);
+userRoutes.post("/addtocart", addToCart);
+userRoutes.get("/getuserbyid/:id", getUserById);
 
 module.exports = userRoutes;

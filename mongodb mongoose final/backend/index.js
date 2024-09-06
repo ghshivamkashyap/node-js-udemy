@@ -4,6 +4,8 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const booksRoutes = require("./routes/books");
 const userRoutes = require("./routes/user");
+const orderRoutes = require("./routes/order");
+const authRoutes = require("./routes/auth");
 
 const app = express();
 app.use(express.json());
@@ -18,6 +20,8 @@ app.use(
 // routes
 app.use("/books", booksRoutes);
 app.use("/user", userRoutes);
+app.use("/order", orderRoutes);
+app.use("/auth", authRoutes);
 
 // db connect and start lstening to port
 mongoose
