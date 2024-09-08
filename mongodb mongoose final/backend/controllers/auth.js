@@ -1,18 +1,34 @@
 const user = require("../models/user");
 require("dotenv").config();
 const bcrypt = require("bcryptjs");
-var nodemailer = require("nodemailer");
+
 const sendgridTransport = require("nodemailer-sendgrid-transport");
 var sgTransport = require("nodemailer-sendgrid-transport");
+const crypto = require("crypto");
+const nodemailer = require("nodemailer");
 
-var mailer = nodemailer.createTransport(
-  sendgridTransport({
-    auth: {
-      api_key:
-      process.env.MAIL_KEY,
-    },
-  })
-);
+const mailSender = async (email, title, body) => {
+  try {
+    let transporter = nodemailer.createTransport({
+      host: process.env.MAIL_HOST,
+      auth: {
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASS,
+      },
+    });
+
+    let info = await transporter.sendMail({
+      from: "Shivam kashyap",
+      to: `${email}`,
+      subject: `${title}`,
+      html: `${body}`,
+    });
+    console.log(info);
+    return info;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
 exports.login = async (req, res, next) => {
   try {
@@ -31,10 +47,14 @@ exports.login = async (req, res, next) => {
       User.password
     );
 
+    const token = crypto.randomBytes(32).toString("hex");
+    console.log("Random token: ", token);
+
     if (checkPassword) {
       return res.status(200).json({
         success: true,
         message: "Logged in successfully",
+        token: token,
       });
     } else {
       return res.status(401).json({
@@ -43,6 +63,7 @@ exports.login = async (req, res, next) => {
       });
     }
   } catch (err) {
+    console.log("Error: ", err);
     return res.status(500).json({
       success: false,
       message: "Something went wrong",
@@ -85,13 +106,10 @@ exports.signup = async (req, res, next) => {
       email: req.body.email,
       password: hashedPassword,
     });
-
-    // const mailRes = await mailer.sendMail({
-    //   from: "shivam@kashyap.com",
-    //   to: req.body.email,
-    //   subject: "Signed up",
-    //   text: "<h1>Succefully signed up!</h1>",
-    // });
+    const email = req.body.email; 
+    const title = "Test Email";
+    const body = "<h1>This is a test email</h1><p>Sent using Nodemailer.</p>";
+    const mailRes = await mailSender(email, title, body);
 
     console.log("mailRes: ", mailRes);
 
