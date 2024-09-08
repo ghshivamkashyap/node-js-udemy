@@ -40,14 +40,14 @@ exports.getAllOrders = async (req, res, nest) => {
       .populate("user")
       .populate("products.productId");
 
-    res.setHeader("Set-Cookie", [
-      "login=shivam",
-      "age=23",
-      "loginToken=12345678910",
-      "sessionId=abc123; HttpOnly",
-      "theme=light",
-      "token=xyz789; Secure; SameSite=Strict",
-    ]);
+    // res.setHeader("Set-Cookie", [
+    //   "login=shivam",
+    //   "age=23",
+    //   "loginToken=12345678910",
+    //   "sessionId=abc123; HttpOnly",
+    //   "theme=light",
+    //   "token=xyz789; Secure; SameSite=Strict",
+    // ]);
   
     return res.status(200).json({
       success: true,
