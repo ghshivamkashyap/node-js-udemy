@@ -3,6 +3,7 @@ exports.uploadFile = async (req, res, next) => {
 
   return res.status(200).json({
     scccess: true,
-    file: req.file.path,
+    data: req.body,
+    file: req.file,
   });
 };
