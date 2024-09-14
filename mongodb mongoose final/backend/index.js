@@ -1,45 +1,45 @@
 const express = require("express");
 const cors = require("cors");
-// const session = require("express-session");
+const bodyparser = require("body-parser");
 // const mongoDBStore = require("connect-mongodb-session")(session);
 require("dotenv").config();
+const multer = require("multer");
 const mongoose = require("mongoose");
 const booksRoutes = require("./routes/books");
 const userRoutes = require("./routes/user");
 const orderRoutes = require("./routes/order");
 const authRoutes = require("./routes/auth");
+const uploadFileRoutes = require("./routes/upload");
 
 const app = express();
-app.use(express.json());
 
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: ["http://localhost:3000", "*"],
     credentials: true,
   })
 );
 
-// const store = new mongoDBStore({
-//   uri: process.env.MONGODB_URL,
-//   collection: "sessions",
-//   // expires: 1 * 60 * 60,
-// });
+// multer congfig
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, +Date.now() + "_" + file.originalname);
+  },
+});
 
-// use session (should be before routes)
-// app.use(
-//   session({
-//     secret: "shivamkashyap",
-//     resave: false,
-//     saveUninitialized: false,
-//     store: store,
-//   })
-// );
+app.use(express.json());
+app.use(bodyparser.urlencoded({ extended: false }));
+app.use(multer({ storage: storage }).single("image"));
 
 // routes
 app.use("/books", booksRoutes);
 app.use("/user", userRoutes);
 app.use("/order", orderRoutes);
 app.use("/auth", authRoutes);
+app.use("/upload", uploadFileRoutes);
 
 // db connect and start listening to port
 mongoose

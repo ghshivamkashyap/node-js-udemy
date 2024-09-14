@@ -84,7 +84,7 @@ exports.logout = async (req, res, next) => {
 
 exports.signup = async (req, res, next) => {
   try {
-    console.log("Req: ", req.body);
+    console.log("Req signup: ", req.body);
     const err = validationResult(req);
     console.log("Error in req: ", err);
 

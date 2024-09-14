@@ -3,14 +3,20 @@ const { check } = require("express-validator");
 const { login, logout, signup } = require("../controllers/auth");
 const authRoutes = express.Router();
 
-authRoutes.post("/login", login);
+authRoutes.post(
+  "/login",
+  check("email").isEmail().withMessage("Please provide a valid email"),
+  login
+);
+
 authRoutes.get("/logout", logout);
+
 authRoutes.post(
   "/signup",
   //   check("email").isEmail(),
   check("email").isEmail().withMessage("Please provide a valid email"),
   check("password")
-    .isLength({ min: 8 })
+    .isLength({ min: 6 })
     .withMessage("Password must be at least 8 characters long"),
   // .matches(/\d/)
   // .withMessage("Password must contain a number")
