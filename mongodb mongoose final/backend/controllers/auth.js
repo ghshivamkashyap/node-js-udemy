@@ -1,6 +1,7 @@
 const user = require("../models/user");
 require("dotenv").config();
 const bcrypt = require("bcryptjs");
+const { validationResult } = require("express-validator");
 
 const sendgridTransport = require("nodemailer-sendgrid-transport");
 var sgTransport = require("nodemailer-sendgrid-transport");
@@ -84,6 +85,16 @@ exports.logout = async (req, res, next) => {
 exports.signup = async (req, res, next) => {
   try {
     console.log("Req: ", req.body);
+    const err = validationResult(req);
+    console.log("Error in req: ", err);
+
+    if (err?.errors.length) {
+      console.log("I am error result array ");
+      return res.status(422).json({
+        success: false,
+        message: err?.errors,
+      });
+    }
 
     const isUserExist = await user.findOne({ email: req.body.email });
     console.log(
@@ -106,7 +117,7 @@ exports.signup = async (req, res, next) => {
       email: req.body.email,
       password: hashedPassword,
     });
-    const email = req.body.email; 
+    const email = req.body.email;
     const title = "Test Email";
     const body = "<h1>This is a test email</h1><p>Sent using Nodemailer.</p>";
     const mailRes = await mailSender(email, title, body);
