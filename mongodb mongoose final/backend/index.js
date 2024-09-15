@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 const bodyparser = require("body-parser");
 // const mongoDBStore = require("connect-mongodb-session")(session);
 require("dotenv").config();
@@ -26,13 +27,15 @@ const storage = multer.diskStorage({
     cb(null, "uploads/");
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + "_" + file.originalname);
+    cb(null, Date.now() + "_" + file.originalname.split(" ").join("_"));
   },
 });
 
+// app.use(express.static(path.join(__dirname, "uploads")));
+app.use("/uploads", express.static("uploads"));
 app.use(express.json());
 app.use(bodyparser.urlencoded({ extended: false }));
-app.use(multer({ storage: storage }).single("image"));
+app.use(multer({ storage: storage }).single("file"));
 
 // routes
 app.use("/books", booksRoutes);
