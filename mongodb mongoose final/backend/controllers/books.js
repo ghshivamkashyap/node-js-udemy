@@ -21,13 +21,20 @@ exports.getAllBooks = async (req, res, next) => {
 
 // create new
 exports.addBook = async (req, res, next) => {
-  const { title, author, pages, imageUrl, price } = req.body;
+  const { title, author, pages, price } = req.body;
+  console.log("Req file: ", req.file);
+
+  const fixedFilePath = req.file.path.replace(/\\/g, "/");
+
+  const fileUrl = `${req.protocol}://${req.get("host")}/uploads/${
+    req.file.filename
+  }`;
   // console.log("Data: ", data);
   try {
     let book = new Book({
       title: title,
       author: author,
-      imageUrl: imageUrl,
+      imageUrl: fileUrl,
       pages: pages,
       price: price,
     });
