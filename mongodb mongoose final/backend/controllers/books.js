@@ -2,8 +2,14 @@ const Book = require("../models/books");
 
 // read all
 exports.getAllBooks = async (req, res, next) => {
+  const ITEMS_PER_PAGE = parseInt(req.query.itemsPerPage) || 5;
+  const page = parseInt(req.query.page) || 1;
+  console.log("Req query: ", req.query);
+  // return;
   try {
-    const result = await Book.find();
+    const result = await Book.find()
+      .skip((page - 1) * ITEMS_PER_PAGE)
+      .limit(ITEMS_PER_PAGE);
 
     return res.status(200).json({
       success: true,

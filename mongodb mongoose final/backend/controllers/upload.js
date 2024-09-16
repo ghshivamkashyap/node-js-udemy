@@ -4,6 +4,8 @@ const PDF = require("pdfkit");
 
 exports.uploadFile = async (req, res, next) => {
   console.log("Req file: ", req.file);
+  console.log("Req body: ", req.body);
+  console.log("Req files: ", req.files);
 
   const fixedFilePath = req.file.path.replace(/\\/g, "/");
 
