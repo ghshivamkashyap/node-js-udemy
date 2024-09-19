@@ -1,8 +1,9 @@
 const express = require("express");
-const cors = require("cors")
+const cors = require("cors");
 const bodyparser = require("body-parser");
 require("dotenv").config();
 const mongoose = require("mongoose");
+const feedRoutes = require("./routes/feed");
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use(bodyparser.urlencoded({ extended: false }));
 
 // routes
+app.use("/feed", feedRoutes);
 
 // db connect and start listening to port
 mongoose
