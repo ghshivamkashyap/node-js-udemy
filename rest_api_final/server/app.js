@@ -29,7 +29,7 @@ app.use(express.json());
 app.use(multer({ storage: storage }).single("file"));
 
 app.use(bodyparser.urlencoded({ extended: false }));
-// app.use("/images", express.static(path.join(__dirname, "images")));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 // routes
 app.use("/feed", feedRoutes);
 
