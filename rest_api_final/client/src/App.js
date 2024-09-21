@@ -16,7 +16,7 @@ class App extends Component {
   state = {
     showBackdrop: false,
     showMobileNav: false,
-    isAuth: true,
+    isAuth: false,
     token: null,
     userId: null,
     authLoading: false,
@@ -96,10 +96,76 @@ class App extends Component {
       });
   };
 
+  // signupHandler = (event, authData) => {
+  //   console.log("authData: ", authData.signupForm);
+  //   event.preventDefault();
+  //   this.setState({ authLoading: true });
+  //   fetch("http://localhost:4000/auth/signup", {
+  //     method: "PUT",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       email: authData.email,
+  //       password: authData.password,
+  //       name: authData.name,
+  //     }),
+  //   })
+  //     .then((res) => {
+  //       if (res.status === 422) {
+  //         throw new Error(
+  //           "Validation failed. Make sure the email address isn't used yet!"
+  //         );
+  //       }
+  //       if (res.status !== 200 && res.status !== 201) {
+  //         console.log("Error!");
+  //         throw new Error("Creating a user failed!");
+  //       }
+  //       return res.json();
+  //     })
+  //     .then((resData) => {
+  //       console.log(resData);
+  //       this.setState({ isAuth: false, authLoading: false });
+  //       this.props.history.replace("/");
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       this.setState({
+  //         isAuth: false,
+  //         authLoading: false,
+  //         error: err,
+  //       });
+  //     });
+  // };
   signupHandler = (event, authData) => {
+    console.log("authData: ", authData.signupForm);
+
     event.preventDefault();
     this.setState({ authLoading: true });
-    fetch("URL")
+
+    // Extracting values from the signup form
+    const email = authData.signupForm.email.value;
+    const password = authData.signupForm.password.value;
+    const name = authData.signupForm.name.value;
+
+    // Ensure form is valid before making the request
+    // if (!authData.formIsValid) {
+    //   console.log("Form is not valid.");
+    //   this.setState({ authLoading: false });
+    //   return;
+    // }
+
+    fetch("http://localhost:4000/auth/signup", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+        name: name,
+      }),
+    })
       .then((res) => {
         if (res.status === 422) {
           throw new Error(

@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const feedRoutes = require("./routes/feed");
 const path = require("path");
 const multer = require("multer");
+const authRoutes = require("./routes/auth");
 
 const app = express();
 
@@ -28,10 +29,11 @@ const storage = multer.diskStorage({
 app.use(express.json());
 app.use(multer({ storage: storage }).single("file"));
 
-app.use(bodyparser.urlencoded({ extended: false }));
+// app.use(bodyparser.urlencoded({ extended: false }));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 // routes
 app.use("/feed", feedRoutes);
+app.use("/auth", authRoutes);
 
 // db connect and start listening to port
 mongoose
