@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-
+import openSocket from "socket.io-client";
 import Post from "../../components/Feed/Post/Post";
 import Button from "../../components/Button/Button";
 import FeedEdit from "../../components/Feed/FeedEdit/FeedEdit";
@@ -35,7 +35,23 @@ class Feed extends Component {
       .catch(this.catchError);
 
     this.loadPosts();
+    const socket = openSocket("http://localhost:4000");
+    socket.on("posts", (data) => {
+      console.log("Socket data: ", data);
+      if (data.action == "create") {
+        this.addPost(data.post);
+      }
+    });
   }
+
+  addPost = (post) => {
+    this.setState((prevState) => {
+      const updatedPosts = [...prevState.posts, post];
+      return {
+        posts: updatedPosts,
+      };
+    });
+  };
 
   loadPosts = (direction) => {
     if (direction) {

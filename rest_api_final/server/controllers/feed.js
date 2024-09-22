@@ -1,6 +1,7 @@
 const post = require("../models/post");
 const path = require("path");
 const User = require("../models/user");
+const io = require("../socket");
 
 // exports.getPosts = async (req, res, next) => {
 //   try {
@@ -14,7 +15,6 @@ const User = require("../models/user");
 
 exports.getPosts = async (req, res, next) => {
   try {
-   
     const result = await post.find().populate("creator", "name email");
     // You can specify which fields of the User model you want to retrieve (e.g., name, email)
 
@@ -54,6 +54,14 @@ exports.createPost = async (req, res, next) => {
   // update user also
   const updatedUser = await User.findByIdAndUpdate(req.user.id, {
     $push: { posts: result._id },
+  });
+
+  io.getIO().emit("posts", {
+    action: "create",
+    post: {
+      ...result._doc,
+      creator: { _id: req.user.id, name: updatedUser.name },
+    },
   });
 
   // Respond with success

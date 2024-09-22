@@ -40,12 +40,12 @@ mongoose
   .connect(process.env.MONGODB_URL)
   .then(() => {
     console.log("Db connected");
-    app.listen(process.env.PORT, (err) => {
-      if (!err) {
-        console.log("Server is running on port", process.env.PORT);
-      } else {
-        console.log("Error: ", err);
-      }
+    const server = app.listen(process.env.PORT);
+
+    const io = require("./socket").init(server);
+
+    io.on("connection", (socket) => {
+      console.log("Client connected on socket io");
     });
   })
   .catch((err) => console.log("DB err", err));
