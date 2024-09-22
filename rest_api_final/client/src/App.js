@@ -57,8 +57,21 @@ class App extends Component {
 
   loginHandler = (event, authData) => {
     event.preventDefault();
+    console.log("Auth data: ", authData);
+    const email = authData.email;
+    const password = authData.password;
+
     this.setState({ authLoading: true });
-    fetch("URL")
+    fetch("http://localhost:4000/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    })
       .then((res) => {
         if (res.status === 422) {
           throw new Error("Validation failed.");
@@ -70,7 +83,7 @@ class App extends Component {
         return res.json();
       })
       .then((resData) => {
-        console.log(resData);
+        console.log("Login data: ", resData);
         this.setState({
           isAuth: true,
           token: resData.token,
