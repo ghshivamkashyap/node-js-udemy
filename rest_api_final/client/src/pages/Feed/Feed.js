@@ -38,7 +38,7 @@ class Feed extends Component {
     const socket = openSocket("http://localhost:4000");
     socket.on("posts", (data) => {
       console.log("Socket data: ", data);
-      if (data.action == "create") {
+      if (data.action === "create") {
         this.addPost(data.post);
       }
     });

@@ -1,10 +1,14 @@
 const express = require("express");
 const cors = require("cors");
+const helmet = require("helmet");
+const compression = require("compression");
+const morgan = require("morgan");
 const bodyparser = require("body-parser");
 require("dotenv").config();
 const mongoose = require("mongoose");
 const feedRoutes = require("./routes/feed");
 const path = require("path");
+const fs = require("fs");
 const multer = require("multer");
 const authRoutes = require("./routes/auth");
 
@@ -16,6 +20,14 @@ app.use(
     credentials: true,
   })
 );
+const accessLogStream = fs.createWriteStream(
+  path.join(__dirname, "access.log"),
+  { flags: "a" }
+);
+
+app.use(helmet());
+app.use(compression());
+app.use(morgan("combined", { stream: accessLogStream }));
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -27,6 +39,7 @@ const storage = multer.diskStorage({
 });
 
 app.use(express.json());
+
 app.use(multer({ storage: storage }).single("file"));
 
 // app.use(bodyparser.urlencoded({ extended: false }));

@@ -18,6 +18,7 @@ exports.getPosts = async (req, res, next) => {
     const result = await post.find().populate("creator", "name email");
     // You can specify which fields of the User model you want to retrieve (e.g., name, email)
 
+
     res.status(200).json({
       posts: result,
     });
