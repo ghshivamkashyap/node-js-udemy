@@ -1,23 +1,3 @@
-// const bcrypt = require("bcryptjs");
-// require("dotenv").config();
-// const jwt = require("jsonwebtoken");
-
-// exports.auth = async (req, res, next) => {
-//   const token = req.get("Authorization").split(" ")[1];
-//   console.log("Req headers: ", token);
-//   try {
-//     let varify = await jwt.verify(token, process.env.JWT_SECRET);
-
-//     console.log("Varify: ", varify);
-//     next();
-//   } catch (err) {
-//     console.log("Token error: ", err);
-//     return res.status(500).json({
-//       success: false,
-//       message: "Internal server error",
-//     });
-//   }
-// };
 const bcrypt = require("bcryptjs");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
