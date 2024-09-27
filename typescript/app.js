@@ -5,7 +5,7 @@
 // ipt.cloneNode
 // these all above values we will get as sugestions from ts bcz
 // we are explisitely spacefying the type of the element ie: HTMLInputElement while importing
-let ar = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+let ar = [];
 var add = (n1, n2) => {
     console.log("Array is: ", ar);
     return n1 + n2;
