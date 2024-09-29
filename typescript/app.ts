@@ -4,13 +4,17 @@
 // ipt.cloneNode
 // these all above values we will get as sugestions from ts bcz
 // we are explisitely spacefying the type of the element ie: HTMLInputElement while importing
-let ar: any[] = [];
+//  ------------------------------------------------
+// old syntax
+let arr: Array<number> = [];
 
+// new syntax
+let ar: number[] = [];
 
-
+// -----------------------------------------------------
 // defining of type by ourself it can me number or stringas a typeand use like
 // correct below
-let val: numOrString=65;
+let val: numOrString = 65;
 
 // wrong below bcz type do not match
 // let val: numOrString=true;
